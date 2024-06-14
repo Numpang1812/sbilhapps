@@ -1431,7 +1431,7 @@ function debounce(func, delay) {
 
 function searchFunction() {
     let input = document.getElementById('defSearch');
-    let filter = input.value.toUpperCase();
+    let filter = input.value.toUpperCase().trim(); // Trim leading and trailing spaces
     let tr = document.querySelectorAll('#dataTable tbody tr');
     
     // Check if the input is a number
@@ -1439,17 +1439,17 @@ function searchFunction() {
 
     for (let i = 0; i < tr.length; i++) {
         let td = tr[i].querySelectorAll('td');
-        let txtValue = Array.from(td).map(td => td.textContent || td.innerText).join(' ');
+        let txtValue = Array.from(td).map(td => td.textContent || td.innerText).join(' ').trim(); // Trim leading and trailing spaces
         
         if (isNumber) {
-            // If the filter is a number, check if the text starts with the filter
+            // If the filter is a number, check if the trimmed text starts with the trimmed filter
             if (txtValue.toUpperCase().startsWith(filter)) {
                 tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";
             }
         } else {
-            // If the filter is text, check if the text contains the filter
+            // If the filter is text, check if the trimmed text contains the filter
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
                 tr[i].style.display = "";
             } else {
@@ -1458,7 +1458,6 @@ function searchFunction() {
         }
     }
 }
-
 
 // Assuming you're calling searchFunction on an input event
 document.getElementById('defSearch').addEventListener('input', function() {
